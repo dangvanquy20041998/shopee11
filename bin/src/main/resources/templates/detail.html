@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head-css">
+<meta charset="UTF-8">
+<title>index</title>
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
+	th:href="@{../bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" href="../static/style.css" th:href="@{../style.css}">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+	integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="head">
+		<!-- start top -->
+		<div class="top">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="title">
+						<span><a href="#">Kênh người bán</a></span> <span><a
+							href="#">Tải ứng dụng</a></span> <span><a href="#">Kết nối</a></span> <span><i
+							class="fab fa-facebook-f"></i></span> <span><i
+							class="fab fa-instagram"></i></span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="title1">
+						<span><i class="far fa-bell"></i>Thông báo</span> <span><i
+							class="far fa-question-circle"></i>Trợ giúp</span> <span>Đăng kí</span>
+						<span>Đăng nhập</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end head -->
+
+		<!-- start menu -->
+		<div class="menu">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="menu-left">
+						<span><i class="fa fa-shopping-bag"></i></span> <span>Shopee</span>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="menu-center">
+						<form action="" method="post">
+							<input class="form-control" type="text" placeholder="Search" />
+							<button class="btn btn-search">
+								<i class="fas
+                                        fa-search"></i>
+							</button>
+						</form>
+						<div class="menu-bottom">
+							<div class="row">
+								<div class="col-md-2">
+									<p>Trang chủ</p>
+								</div>
+								<div class="col-md-2">
+									<p>Danh mục</p>
+								</div>
+								<div class="col-md-2">
+									<p>Tin Tức</p>
+								</div>
+								<div class="col-md-2">
+									<p>Giới thiệu</p>
+								</div>
+								<div class="col-md-2">
+									<p></p>
+								</div>
+								<div class="col-md-2">
+									<p></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="menu-right">
+						<a href="/cart"><i class="fa fa-shopping-cart"></i></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- end menu -->
+	</div>
+
+	<!-- start content -->
+	<div class="content">
+		<div class="content-detail">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<img class="img-product" th:src="@{${product.image}}" alt="">
+						<!-- start hover -->
+						<div class="content-hover">
+							<div class="row">
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+							</div>
+						</div>
+						<!-- end hover -->
+
+						<!-- start share -->
+						<div class="share">
+							<div class="row">
+								<div class="col-md-6">
+									<span class="share-text">Chia sẻ: </span> <span><i
+										class="fab
+                                                fa-facebook-messenger
+                                                share-messenger"></i></span>
+									<span><i
+										class="fab fa-facebook-f
+                                                share-facebook"></i></span>
+									<span><i
+										class="fab fa-google-plus-g
+                                                share-google"></i></span>
+									<span><i
+										class="fab fa-pinterest-p
+                                                share-pinterest"></i></span>
+									<span><i
+										class="fab fa-twitter
+                                                share-twitter"></i></span>
+								</div>
+								<div class=col-md-6></div>
+							</div>
+						</div>
+						<!-- end share -->
+					</div>
+
+					<div class="col-md-7">
+						<h4 th:text="${product.name}"></h4>
+
+
+
+						<!-- start evaluate -->
+						<div class=evaluate>
+							<div class="row">
+								<div class="col-md-4">
+									<span><i class="fas fa-star"></i></span> <span><i
+										class="fas fa-star"></i></span> <span><i class="fas fa-star"></i></span>
+									<span><i class="fas fa-star"></i></span> <span><i
+										class="fas fa-star"></i></span>
+								</div>
+								<div class="col-md-8"></div>
+							</div>
+						</div>
+						<!-- end evaluate -->
+
+						<!-- start price -->
+						<div class="price">
+							<div class="price-block">
+								<div class="row">
+									<div class="col-md-3">
+										<!-- start price old -->
+										<div class="price-old">
+											<h5 class="price-product" th:text="${product.price}"></h5>
+											<div class="price-old-bottom"></div>
+										</div>
+										<!-- end price old -->
+									</div>
+									<div class="col-md-3">
+										<!-- start price new -->
+										<div class="price-new">
+											<h4>2.500.000</h4>
+										</div>
+										<!-- end price new -->
+									</div>
+								</div>
+							</div>
+
+							<div class="price-img">
+								<div class="row">
+									<div class="col-md-2">
+										<img src="../image/price.png" alt="">
+									</div>
+									<div class="col-md-10">
+										<h5>Ở đâu rẻ hơn, Shopee hoàn tiền</h5>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- start sport -->
+						<div class="transport">
+							<div class="row">
+								<div class="col-md-3">
+									<h4>Vận chuyển</h4>
+								</div>
+								<div class="col-md-9">
+									<div class="transport-detail">
+									<div>
+										<span><img src="../image/free.png" alt=""></span> <span
+											class="transport1">Miễn Phí Vận Chuyển</span>
+									</div>
+									<div>
+										<span><i class="fa fa-car-side"></i></span> <span
+											class="transport-car">Vận chuyển tận nơi</span>
+									</div>
+									<div></div>
+								</div>
+							</div>
+
+							<button class="btn btn-cart">Thêm Vào Giỏ Hàng</button>
+							<i class="fa fa-cart-plus cart"></i>
+						</div>
+						<!-- end sport -->
+
+
+					</div>
+					<!-- end price -->
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+	
+		<!-- end content -->
+
+		<div class="detail">
+			<div class="container">
+				<div class="title-detail">
+					<h5>CHI TIẾT SẢN PHẨM</h5>
+				</div>
+
+				<table class="table">
+					<tbody>
+						<tr>
+							<td class="thead">Danh mục</td>
+							<td>Smartphone</td>
+						</tr>
+						<tr>
+							<td class="thead">Danh mục</td>
+							<td>Smartphone</td>
+						</tr>
+						<tr>
+							<td class="thead">Danh mục</td>
+							<td>Smartphone</td>
+						</tr>
+						<tr>
+							<td class="thead">Danh mục</td>
+							<td>Smartphone</td>
+						</tr>
+						<tr>
+							<td class="thead">Danh mục</td>
+							<td>Smartphone</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<div class="title-detail">
+					<h5>Mô Tả Sản Phẩm</h5>
+				</div>
+
+				<div class="description">
+					<p th:text="${product.description}"></p>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="footer text-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<ul>
+							<li><a href="#">Tìm hiểu về mua trả góp</a></li>
+							<li><a href="#">Chính sách bảo hành</a></li>
+							<li><a href="#">Chính sách đổi trả</a></li>
+							<li><a href="#">Giao hàng & Thanh toán</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-6">
+						<ul>
+							<li><a href="#">Gọi mua hàng 1800.1060 (7:30 - 22:00)</a></li>
+							<li><a href="#">Gọi khiếu nại 1800.1062 (8:00 - 21:30)</a></li>
+							<li><a href="#">Gọi bảo hành 1800.1064 (8:00 - 21:00)</a></li>
+							<li><a href="#">Hỗ trợ kỹ thuật 1800.1763 (7:30 - 22:00)</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-3">
+						<ul>
+							<li><a href="#">Tìm hiểu về mua trả góp</a></li>
+							<li><a href="#">Chính sách bảo hành</a></li>
+							<li><a href="#">Chính sách đổi trả</a></li>
+							<li><a href="#">Giao hàng & Thanh toán</a></li>
+						</ul>
+					</div>
+					<p>© 2018. Công ty cổ phần Thế Giới Di Động. GPDKKD: 0303217354
+						do sở KH & ĐT TP.HCM cấp ngày 02/01/2007. GP số 56/GP-TTDT do Sở
+						TTTT TP HCM cấp ngày 30/07/2018. Địa chỉ: 128 Trần Quang Khải, P.
+						Tân Định, Q.1, TP.Hồ Chí Minh. Điện thoại: 18001060. Email:
+						cskh@thegioididong.com. Chịu trách nhiệm nội dung: Trần Nhật Linh.
+					</p>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+		<script type="text/javascript" src="../static/main.js"
+			th:src="@{../main.js}"></script>
+		<script src="../static/bootstrap/js/bootstrap.min.js"
+			th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+   			 var id = /*[[${product.id}]]*/ 'default';
+			/*]]>*/
+			
+			$(".btn-cart").click(function() {
+				$.ajax({
+					url : "/addCart",
+					type : "GET",
+					data : {
+						id : id
+					},
+				
+					success : function () {
+						
+					}
+				})
+			})
+</script>
+</body>
+</html>

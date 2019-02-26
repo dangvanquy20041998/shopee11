@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin::head">
+ 
+</head>
+
+<body class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+      <div class="logo">
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+          Creative Tim
+        </a>
+      </div>
+      <div th:replace="admin::menu-left"></div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav th:replace="admin::nav-admin"></nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Product Page </h4><span class="page" th:text="${pageNumber}"></span>
+                  <p class="card-category"> List Product</p>
+                  <i class="fa fa-plus-circle icon-create"></i>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+					 <table id="table" class="table">
+						<thead class=" text-primary">
+							<th>ID</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Image</th>
+							<th></th>
+							<th></th>					
+						</thead>
+						<tbody>
+							<th:block th:each="product : ${products}">
+								<tr>
+									<td th:text="${product.id}"></td>
+									<td th:text="${product.name}"></td>
+									<td th:text="${product.price}"></td>
+									<td class="td-image"><img th:src="@{${product.image}}" /></td>
+									<td class="icon-update"><a class="link-update" th:href="@{/findOne/(id=${product.id})}"><i class="fa fa-pencil"></i></a></td>
+									<td class="icon-delete"><a class="link-delete" th:href="@{/delete/(id=${product.id})}"><i class="fa fa-trash"></i></a></td>
+								</tr>
+							</th:block>
+						</tbody>					
+					</table>
+					<nav class="paging" aria-label="Page navigation example">
+  						<ul class="pagination">
+    
+    						<li th:each="i : ${#numbers.sequence(1,paging)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/product/(page=${i})}"></a></li>
+   
+  						</ul>
+	  				</nav>
+				 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer th:replace="admin::footer-admin"></footer>
+      <script>
+        const x = new Date().getFullYear();
+        let date = document.getElementById('date');
+        date.innerHTML = '&copy; ' + x + date.innerHTML;
+      </script>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form th:action="@{/create}" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="price" placeholder="Price" name="price">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="description" placeholder="Description" name="description">
+          </div>
+          <label class="col-form-label">Category</label>	
+          <span class="form-group">
+            <select name="idcategory">
+            	<th:block th:each="category : ${categories}">
+            		<option th:value="${category.id}" th:text="${category.name}"></option>
+            	</th:block>
+            </select>
+           </span>
+           <div>
+           	<input type="file" name="files" />
+           </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Create"></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form th:action="@{/update}" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+      	  <div class="form-group">
+            <input type="text" class="form-control" id="id" placeholder="ID" readonly="readonly" name="id">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="price" placeholder="Price" name="price">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="description" placeholder="Description" name="description">
+          </div>
+          <label class="col-form-label">Category</label>	
+          <span class="form-group">
+            <select name="idcategory">
+            	<th:block th:each="category : ${categories}">
+            		<option th:value="${category.id}" th:text="${category.name}"></option>
+            	</th:block>
+            </select>
+           </span>
+           <div>
+           	<input type="file" name="files" />
+           </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Update"></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p class="alert alert-danger">
+       	 You want delete
+       </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-danger" id="delete">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="https://unpkg.com/default-passive-events"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chartist JS -->
+  <script src="../assets/js/plugins/chartist.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-dashboard.js?v=2.1.0"></script>
+  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/demo/demo.js"></script>
+  <script th:replace="admin::script-admin">
+   
+  </script>
+</body>
+
+</html>

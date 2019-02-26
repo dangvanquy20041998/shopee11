@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>cart</title>
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" href="../static/style.css" th:href="@{style.css}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+	integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+	crossorigin="anonymous">
+</head>
+<body>
+<div class="head">
+            <!-- start top -->
+		<div class="top">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="title">
+						<span><a href="#">Kênh người bán</a></span> <span><a
+							href="#">Tải ứng dụng</a></span> <span><a href="#">Kết nối</a></span> <span><i
+							class="fab fa-facebook-f"></i></span> <span><i
+							class="fab fa-instagram"></i></span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="title1">
+						<span><i class="far fa-bell"></i>Thông báo</span>
+						<span><i class="far fa-question-circle"></i>Trợ giúp</span>
+						
+						<div th:if="${user != null}">
+							<i onclick="myFunction()" class="fas fa-user icon-user"></i>
+							<div id="myDropdown" class="dropdown-content">
+							    <a href="#home" th:text="${user.email}"></a>
+							    <th:block th:each="role : ${roles}">
+							    	<a th:if="${role.name == 'ROLE_ADMIN'}" th:text="${role.name}" href="/admin"></a>
+							    </th:block>
+							    <a th:href="@{/logout}">Logout</a>
+							</div>
+						</div>
+						
+						
+						<span th:if="${user == null}" class="register"><a href="/register">Đăng kí</a></span>
+						<span th:if="${user == null}" class="login"><a href="/login">Đăngnhập</a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end head -->
+
+        <!-- start menu -->
+		<div class="menu">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="menu-left">
+						<span><i class="fa fa-shopping-bag"></i></span> <span>Shopee</span>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="menu-center">
+						<form action="" method="post">
+							<input class="form-control" type="text" placeholder="Search" />
+							<button class="btn btn-search">
+								<i class="fas
+                                        fa-search"></i>
+							</button>
+						</form>
+						<!-- start menu -->
+						<div id="menu">
+							<nav id="background" class="navbar navbar-expand-lg">
+								<div class="collapse navbar-collapse"
+									id="navbarSupportedContent">
+									<ul class="navbar-nav mr-auto">
+										<li class="nav-item active"><a class="nav-link" href="/">Trang
+												chủ<span class="sr-only">(current)</span>
+										</a></li>
+										<li class="nav-item"><a class="nav-link dropdown-toggle"
+											href="#" id="navbarDropdown" role="button"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false"> Danh mục </a>
+											<div class="dropdown-menu dropdown1"
+												aria-labelledby="navbarDropdown">
+												
+												<th:block th:each="category : ${categories}">
+													<a class="dropdown-item" href="#" th:text="${category.name}"></a>
+												</th:block>
+												
+												
+											</div></li>
+										<li class="nav-item"><a class="nav-link" href="#">Tin
+												tức</a></li>
+										<li class="nav-item"><a class="nav-link" href="#">Giới
+												thiệu</a></li>
+
+									</ul>
+								</div>
+							</nav>
+						</div>
+						<!-- end menu -->
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- end menu -->
+		</div>
+		
+<div class="cart1">
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<h4 class="cart-info">Thông tin giỏ hàng</h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<td>ID</td>
+						<td>Name</td>
+						<td>Price</td>
+						<td>Quantity</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="cart : ${listCart}">
+						<tr>
+							<td th:text="${cart.id}"></td>
+							<td th:text="${cart.name}"></td>
+							<td class="price-product" th:text="${cart.price}"></td>
+							<td class="quantity" th:text="${cart.quantity}"></td>
+							<td class="btn-delete-cart"><a class="link-delete-cart" th:href="@{/deleteCart/(id=${cart.id})}"><i class="fa fa-trash"></i></a></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			<h4>Tổng tiền :</h4>
+			<h4 id="totalprice"></h4>
+		</div>
+		<div class="col-md-4">
+			<div class="carttitlecustomer">
+				<h4>Thông tin khách hàng</h4>
+				</div>
+				<form th:action="@{/createInvoice}" method="post">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Họ tên</label> <input type="text"
+							class="form-control" name="name" id="exampleInputEmail1"
+							placeholder="Nhập tên"> <small
+							class="form-text text-muted"></small>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Điện thoại liên lạc</label> <input
+							type="text" class="form-control" name="phone"
+							placeholder="Nhập số điện thoại">
+					</div>
+
+					<div class="radio">
+						<label> <input type="radio" name="choose"
+							checked="checked" value="Nhận hàng tại nhà" />Nhận hàng tại nhà
+						</label>
+					</div>
+
+					<div class="radio">
+						<label> <input type="radio" name="choose" value="Nhận hàng tại
+							cửa hàng gần nhất" />Nhận hàng tại
+							cửa hàng gần nhất
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label for="exampleInputEmail1">Địa chỉ</label> <input type="text"
+							class="form-control" name="address" placeholder="Nhập địa chỉ">
+						<small class="form-text text-muted"></small>
+					</div>
+
+
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">Ghi chú</label>
+						<textarea class="form-control" id="exampleFormControlTextarea1" name="noted"
+							rows="3"></textarea>
+					</div>
+					<div th:if="${user != null}">
+						<button type="submit" class="btn btn-primary btn-order-cart">Đặt hàng</button>
+					</div>
+					
+					<div th:if="${user == null}">
+						<h4>Đăng nhập để đặt hàng</h4>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="deleteCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <p class="alert alert-danger">
+       	 You want delete
+       </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-danger" id="deleteCart">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+      <script type="text/javascript" src="../static/main.js" th:src="@{main.js}"></script>
+      <script src="../static/bootstrap/js/bootstrap.min.js" th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+      <script th:inline="javascript">
+      
+</script>
+</body>
+</html>

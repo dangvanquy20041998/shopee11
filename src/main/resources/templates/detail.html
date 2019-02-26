@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>detail</title>
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{../bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" href="../static/style.css" th:href="@{../style.css}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+	integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="head">
+		<!-- start top -->
+		<div class="top">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="title">
+						<span><a href="#">Kênh người bán</a></span> <span><a
+							href="#">Tải ứng dụng</a></span> <span><a href="#">Kết nối</a></span> <span><i
+							class="fab fa-facebook-f"></i></span> <span><i
+							class="fab fa-instagram"></i></span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="title1">
+						<span><i class="far fa-bell"></i>Thông báo</span> <span><i
+							class="far fa-question-circle"></i>Trợ giúp</span>
+						<div th:if="${user != null}">
+							<i onclick="myFunction()" class="fas fa-user icon-user"></i>
+							<div id="myDropdown" class="dropdown-content">
+							    <a href="#home" th:text="${user.email}"></a>
+							    <th:block th:each="role : ${roles}">
+							    	<a th:if="${role.name == 'ROLE_ADMIN'}" th:text="${role.name}" href="/admin"></a>
+							    </th:block>
+							    <a th:href="@{/logout}">Logout</a>
+							</div>
+						</div>
+						
+						
+						<span th:if="${user == null}" class="register"><a href="/register">Đăng kí</a></span>
+						<span th:if="${user == null}" class="login"><a href="/login">Đăngnhập</a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end head -->
+
+		<!-- start menu -->
+		<div th:fragment="menu" class="menu">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="menu-left">
+						<span><i class="fa fa-shopping-bag"></i></span> <span>Shopee</span>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="menu-center">
+						<form th:action="@{/search}" method="post">
+							<input class="form-control" type="text" name="name" placeholder="Search" />
+							<button type="submit" class="btn btn-search">
+								<i class="fas
+                                        fa-search"></i>
+							</button>
+						</form>
+						<!-- start menu -->
+						<div id="menu">
+							<nav id="background" class="navbar navbar-expand-lg">
+								<div class="collapse navbar-collapse"
+									id="navbarSupportedContent">
+									<ul class="navbar-nav mr-auto">
+										<li class="nav-item active"><a class="nav-link" href="/" th:utext="#{label.index}">
+												<span class="sr-only">(current)</span>
+										</a></li>
+										<li class="nav-item"><a class="nav-link dropdown-toggle"
+											href="#" id="navbarDropdown" role="button"
+											data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false" th:text="#{label.category}">  </a>
+											<div class="dropdown-menu dropdown1"
+												aria-labelledby="navbarDropdown">
+												
+												<th:block th:each="category : ${categories}">
+													<a class="dropdown-item" th:href="@{/category/(id=${category.id})}" th:text="${category.name}"></a>
+												</th:block>
+												
+												
+											</div></li>
+										<li class="nav-item"><a class="nav-link" href="#" th:utext="#{label.news}"></a></li>
+										<li class="nav-item"><a class="nav-link" href="#" th:utext="#{label.about}"></a></li>
+
+									</ul>
+								</div>
+							</nav>
+						</div>
+						<!-- end menu -->
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="menu-right">
+					<div id="alertsuccess" class="alert alert-success">
+					<strong>Đã Thêm</strong>
+					</div>
+						<a href="/cart"><i class="fa fa-shopping-cart"></i></a>
+						<p class="sizeCart" th:text="${sizeCart}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end menu -->
+	</div>
+
+	<!-- start content -->
+	<div class="content">
+		<div class="content-detail">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<img class="img-product" th:src="@{${product.image}}" alt="">
+						<!-- start hover -->
+						<div class="content-hover">
+							<div class="row">
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+								<div class="col-md-3">
+									<img src="/image/asus-zenfone-max-pro.jpg" alt="">
+								</div>
+							</div>
+						</div>
+						<!-- end hover -->
+
+						<!-- start share -->
+						<div class="share">
+							<div class="row">
+								<div class="col-md-6">
+									<span class="share-text">Chia sẻ: </span> <span><i
+										class="fab
+                                                fa-facebook-messenger
+                                                share-messenger"></i></span>
+									<span><i
+										class="fab fa-facebook-f
+                                                share-facebook"></i></span>
+									<span><i
+										class="fab fa-google-plus-g
+                                                share-google"></i></span>
+									<span><i
+										class="fab fa-pinterest-p
+                                                share-pinterest"></i></span>
+									<span><i
+										class="fab fa-twitter
+                                                share-twitter"></i></span>
+								</div>
+								<div class=col-md-6></div>
+							</div>
+						</div>
+						<!-- end share -->
+					</div>
+
+					<div class="col-md-7">
+						<h4 th:text="${product.name}"></h4>
+
+
+
+						<!-- start evaluate -->
+						<div class=evaluate>
+							<div class="row">
+								<div class="col-md-4">
+									<span><i class="fas fa-star"></i></span> <span><i
+										class="fas fa-star"></i></span> <span><i class="fas fa-star"></i></span>
+									<span><i class="fas fa-star"></i></span> <span><i
+										class="fas fa-star"></i></span>
+								</div>
+								<div class="col-md-8"></div>
+							</div>
+						</div>
+						<!-- end evaluate -->
+
+						<!-- start price -->
+						<div class="price">
+							<div class="price-block">
+								<div class="row">
+									<div class="col-md-3">
+										<!-- start price old -->
+										<div class="price-old">
+											<h5 class="price-product" th:text="${product.price}"></h5>
+											<div class="price-old-bottom"></div>
+										</div>
+										<!-- end price old -->
+									</div>
+									<div class="col-md-3">
+										<!-- start price new -->
+										<div class="price-new">
+											<h4>2.500.000</h4>
+										</div>
+										<!-- end price new -->
+									</div>
+								</div>
+							</div>
+
+							<div class="price-img">
+								<div class="row">
+									<div class="col-md-2">
+										<img src="../image/price.png" alt="">
+									</div>
+									<div class="col-md-10">
+										<h5>Ở đâu rẻ hơn, Shopee hoàn tiền</h5>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- start sport -->
+						<div class="transport">
+							<div class="row">
+								<div class="col-md-3">
+									<h4>Vận chuyển</h4>
+								</div>
+								<div class="col-md-9">
+									<div class="transport-detail">
+									<div>
+										<span><img src="../image/free.png" alt=""></span> <span
+											class="transport1">Miễn Phí Vận Chuyển</span>
+									</div>
+									<div>
+										<span><i class="fa fa-car-side"></i></span> <span
+											class="transport-car">Vận chuyển tận nơi</span>
+									</div>
+									<div></div>
+								</div>
+							</div>
+
+							<button class="btn btn-cart">Thêm Vào Giỏ Hàng</button>
+							<i class="fa fa-cart-plus cart"></i>
+						</div>
+						<!-- end sport -->
+
+
+					</div>
+					<!-- end price -->
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+	
+		<!-- end content -->
+
+		<div class="detail">
+			<div class="container">
+				<div class="title-detail">
+					<h5>CHI TIẾT SẢN PHẨM</h5>
+				</div>
+
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>Danh mục</td>
+							<td th:text="${product.category.name}"></td>
+						</tr>
+						<tr>
+							<td class="thead">Màn hình</td>
+							<td th:text="${parameter.screen}"></td>
+						</tr>
+						<tr>
+							<td class="thead">Camera</td>
+							<td th:text="${parameter.camera}"></td>
+						</tr>
+						<tr>
+							<td class="thead">RAM</td>
+							<td th:text="${parameter.ram}"></td>
+						</tr>
+						<tr>
+							<td class="thead">CPU</td>
+							<td th:text="${parameter.cpu}"></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<div class="title-detail">
+					<h5>Mô Tả Sản Phẩm</h5>
+				</div>
+
+				<div class="description">
+					<p th:text="${product.description}"></p>
+				</div>
+
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="comment">
+				<h4>Bình luận</h4>
+				<form th:action="@{/createComment}" method="post">
+					<div class="form-group">
+							<label for="exampleFormControlTextarea1">Gửi bình luận</label>
+							<textarea class="form-control" id="exampleFormControlTextarea1" name="description"
+								rows="3"></textarea>
+					</div>
+					
+					<div th:if="${user != null}">
+							<button type="submit" class="btn btn-primary btn-comment">Gửi</button>
+					</div>
+						
+						<div th:if="${user == null}">
+							<h4>Đăng nhập để gửi bình luận</h4>
+						</div>
+				</form>
+			</div>
+			<div class="list-comment">
+				<h3>Xem các bình luận</h3>
+				
+				<th:block th:each="comment : ${comments}">
+					<h5 th:text="${comment.user.email}"></h5>
+					<p th:text="${comment.description}"></p>
+					
+					<div class="ans">
+						<span class="show-ans">Trả lời</span>
+						<div class="comment">
+				
+				<div id="hidden-ans" class="hidden-ans">
+					<form th:action="@{/createComment}" method="post">
+					<div class="form-group">
+							<textarea class="form-control" id="exampleFormControlTextarea1" name="description"
+								rows="1"></textarea>
+					</div>
+					
+					<div th:if="${user != null}">
+							<button type="submit" class="btn btn-primary btn-comment">Gửi</button>
+					</div>
+						
+						<div th:if="${user == null}">
+							<h4>Đăng nhập để gửi bình luận</h4>
+						</div>
+				</form>
+				</div>
+			</div>
+						<span th:text="${comment.joindate}"></span>
+					</div>
+					
+				</th:block>
+				
+				
+			</div>
+		</div>
+
+		<div th:replace="index::footer"></div>
+		<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+		<script type="text/javascript" src="../static/main.js"
+			th:src="@{../main.js}"></script>
+		<script src="../static/bootstrap/js/bootstrap.min.js"
+			th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+   			 var id = /*[[${product.id}]]*/ 'default';
+			/*]]>*/
+			var sizeCart = $(".sizeCart").text();
+			//console.log(sizeCart);
+			$(".btn-cart").click(function() {
+				sizeCart = parseFloat(sizeCart) + 1;
+				console.log(sizeCart);
+				$.ajax({
+					url : "/addCart",
+					type : "GET",
+					data : {
+						id : id
+					},
+				
+					success : function () {
+						$("#alertsuccess").fadeIn();
+			            $("#alertsuccess").fadeOut(2000);
+						$(".sizeCart").html(sizeCart);
+					}
+				})
+			})
+</script>
+
+<script>
+      if (document.cookie.indexOf('visited=true') == -1){
+  	    // load the overlay
+  	    $('#myModal').modal({show:true});
+  	    
+  	    var year = 1000*60*60*24*365;
+  	    var expires = new Date((new Date()).valueOf() + year);
+  	    document.cookie = "visited=true;expires=" + expires.toUTCString();
+
+  	  }
+      
+      function myFunction() {
+    	  document.getElementById("myDropdown").classList.toggle("show");
+    	}
+      
+      window.onclick = function(event) {
+    	  if (!event.target.matches('.icon-user')) {
+    	    var dropdowns = document.getElementsByClassName("dropdown-content");
+    	    var i;
+    	    for (i = 0; i < dropdowns.length; i++) {
+    	      var openDropdown = dropdowns[i];
+    	      if (openDropdown.classList.contains('show')) {
+    	        openDropdown.classList.remove('show');
+    	      }
+    	    }
+    	  }
+    	}
+	  </script>
+</body>
+</html>
