@@ -30,12 +30,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <div class="login-logo">
     <a href="/login"><img src="images/logo.png" alt=""/></a>
   </div>
-  <h2 class="form-heading">LOGIN</h2>
+  <h2 class="form-heading">REGISTER</h2>
   <div class="app-cam">
-	  <form th:action="@{/createUser}" method="POST">
-		<input type="text" class="text" name="email" placeholder="Email">
-		<input type="password" name="password" placeholder="Password">
-		<div class="submit"><input type="submit" onclick="myFunction()" value="Login"></div>
+	  <form th:action="@{/createUser}" th:object="${user}" method="POST">
+		<input type="text" class="text" th:field="*{email}" th:errorclass="field-error" placeholder="Email">
+		<em th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</em>
+		<input type="password" th:field="*{password}" placeholder="Password">
+		<em th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</em>
+		<div class="submit"><input type="submit" onclick="myFunction()" value="Register"></div>
 	</form>
   </div>
    <div class="copy_layout login">

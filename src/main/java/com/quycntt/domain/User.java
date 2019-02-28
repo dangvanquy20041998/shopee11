@@ -31,6 +31,8 @@ public class User implements Serializable {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
+	@NotEmpty
+	@Length(min=6)
 	@Column(name = "password", nullable = false)
 	private String password;
 	

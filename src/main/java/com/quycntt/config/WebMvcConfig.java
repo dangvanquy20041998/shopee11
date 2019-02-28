@@ -29,8 +29,6 @@ public class WebMvcConfig implements WebMvcConfigurer{
         // Đọc vào file i18n/messages_xxx.properties
         // Ví dụ: i18n/messages_en.properties
         messageResource.setBasename("classpath:i18n/messages");
-        messageResource.addBasenames("classpath:validator/messages");
-        messageResource.setDefaultEncoding("UTF-8");
         return messageResource;
     }
     @Override

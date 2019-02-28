@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -77,20 +81,24 @@ public class MainController {
 	}
 	
 	@GetMapping("/register")
-	public String getRegister() {
+	public String getRegister(ModelMap modelMap) {
+		modelMap.addAttribute("user", new User());
 		return "register";
 	}
 	
 	@PostMapping("/createUser")
-	public String register(@RequestParam String email, @RequestParam String password) {
-		User user = new User();
-		user.setEmail(email);
-		user.setPassword(passwordEncoder.encode(password));
-		HashSet<Role> roles = new HashSet<>();
-		roles.add(roleServiceImp.findByName("ROLE_MEMBER"));
-		user.setRoles(roles);
-		userServiceImp.save(user);
-		return "login";
+	public String register(@Valid User user, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+            return "register";
+        } else {
+        	user.setPassword(passwordEncoder.encode(user.getPassword()));
+    		HashSet<Role> roles = new HashSet<>();
+    		roles.add(roleServiceImp.findByName("ROLE_MEMBER"));
+    		user.setRoles(roles);
+    		
+    		userServiceImp.save(user);
+    		return "login";
+        }
 	}
 	
 	@PostMapping("/search")

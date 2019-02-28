@@ -16,6 +16,8 @@ import com.quycntt.domain.Product;
 public interface ProductRepository extends CrudRepository<Product, Integer>{
 	Product findById(int id);
 	
+	List<Product> findByNameContaining(String name);
+	
 	@Query("select p from Product p order by joindate desc")
 	List<Product> findProductLimit(Pageable pageable);
 	
@@ -27,8 +29,8 @@ public interface ProductRepository extends CrudRepository<Product, Integer>{
 	@Query("delete from Product p where p.id = :id")
 	void deleteProduct(@Param("id") Integer id );
 	
-	@Query("SELECT p FROM Product p WHERE p.name LIKE CONCAT('%',:name,'%')")
-	List<Product> searchProduct(@Param("name") String name);
+//	@Query("SELECT p FROM Product p WHERE p.name LIKE CONCAT('%',:name,'%')")
+//	List<Product> searchProduct(@Param("name") String name);
 	
 	@Query("from Product p where p.category = :category")
 	List<Product> findByCategoryId(@Param("category") Category category);

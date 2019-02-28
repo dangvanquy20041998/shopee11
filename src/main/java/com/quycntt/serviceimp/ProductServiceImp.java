@@ -49,7 +49,7 @@ public class ProductServiceImp implements ProductService{
 
 	@Override
 	public List<Product> searchProduct(String name) {
-		return productRepository.searchProduct(name);
+		return productRepository.findByNameContaining(name);
 	}
 
 	@Override
